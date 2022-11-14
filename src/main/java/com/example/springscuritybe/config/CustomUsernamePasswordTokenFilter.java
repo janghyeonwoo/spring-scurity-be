@@ -16,31 +16,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.nio.charset.StandardCharsets;
 
+/**
+ *  UsernamePasswordAuthenticationFilter의 RequestMatcher는 [Post] login 이다
+ */
 @Slf4j
-public class CustomUsernamePasswordToken  extends UsernamePasswordAuthenticationFilter {
+public class CustomUsernamePasswordTokenFilter extends UsernamePasswordAuthenticationFilter {
 
-    public CustomUsernamePasswordToken(AuthenticationManager authenticationManager) {
+    public CustomUsernamePasswordTokenFilter(AuthenticationManager authenticationManager) {
         super(authenticationManager);
     }
 
     @SneakyThrows
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-        log.info("ssssssssssssssssssssssssssssssssssssssss");
         ObjectMapper objectMapper = new ObjectMapper();
         UserDto re = objectMapper.readValue(StreamUtils.copyToString(request.getInputStream(), StandardCharsets.UTF_8), UserDto.class);
-
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(re.getUsername(),re.getPassword());
-        setDetails(request,token);
         return super.getAuthenticationManager().authenticate(token);
     }
-
-    @Override
-    protected void setDetails(HttpServletRequest request, UsernamePasswordAuthenticationToken authRequest) {
-        super.setDetails(request, authRequest);
-    }
-
-
-
 
 }
