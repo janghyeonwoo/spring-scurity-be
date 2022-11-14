@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
+
 public class UserDto implements UserDetails {
     private User user;
     List<GrantedAuthority> grantedAuthorities;
@@ -50,5 +51,9 @@ public class UserDto implements UserDetails {
     @Override
     public boolean isEnabled() {
         return false;
+    }
+
+    public User getUser() {
+        return user;
     }
 }

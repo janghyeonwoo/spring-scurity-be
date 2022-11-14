@@ -25,7 +25,7 @@ public class CustomProvider implements AuthenticationProvider {
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         log.info("Authentication authenticate : {}", authentication);
         UserDetails userDto = customUserDetailService.loadUserByUsername(authentication.getName());
-        UsernamePasswordAuthenticationToken  token = new UsernamePasswordAuthenticationToken(userDto,null,userDto.getAuthorities());
+        UsernamePasswordAuthenticationToken  token = new UsernamePasswordAuthenticationToken((UserDto) userDto,null,userDto.getAuthorities());
         return token;
     }
 
