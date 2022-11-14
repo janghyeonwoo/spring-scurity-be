@@ -13,10 +13,13 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
+
+import java.util.logging.Filter;
 
 
 /**
@@ -26,21 +29,16 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
-    private final RequestMatcher LOGIN_REQUEST_MATCHER = new AntPathRequestMatcher("/login");
+    private final RequestMatcher APP_LOGIN_REQUEST_MATCHER = new AntPathRequestMatcher("/app/login");
     private final UserRepository userRepository;
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
-        CustomUsernamePasswordTokenFilter customUsernamePasswordToken = new CustomUsernamePasswordTokenFilter(authenticationManager());
-        customUsernamePasswordToken.setAuthenticationSuccessHandler(authenticationSuccessHandler());
-
-
         http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/user/**").authenticated()
                     .and()
                     .formLogin().disable()
-                    .addFilterBefore(customUsernamePasswordToken, UsernamePasswordAuthenticationFilter.class)
+                    .addFilterBefore(customAuthFilter(), UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling()
                 .authenticationEntryPoint(new CustomAuthenticationEntryPoint())
                 .and()
@@ -59,6 +57,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         auth.authenticationProvider(customAuthenticationProvider());
         super.configure(auth);
     }
+
+
+    public AbstractAuthenticationProcessingFilter UsernamePasswordAuthenticationFilter() throws Exception {
+        CustomUsernamePasswordTokenFilter customUsernamePasswordTokenFilter = new CustomUsernamePasswordTokenFilter(authenticationManager());
+        customUsernamePasswordTokenFilter.setAuthenticationSuccessHandler(authenticationSuccessHandler());
+        return customUsernamePasswordTokenFilter;
+    }
+
+
+    public AbstractAuthenticationProcessingFilter customAuthFilter() throws Exception {
+        CustomAuthFilter customAuthFilter = new CustomAuthFilter(APP_LOGIN_REQUEST_MATCHER);
+        customAuthFilter.setAuthenticationManager(authenticationManager());
+        customAuthFilter.setAuthenticationSuccessHandler(authenticationSuccessHandler());
+        return customAuthFilter;
+    }
+
+
     @Bean
     public AuthenticationProvider customAuthenticationProvider(){
         return new CustomProvider(userDetailsService());
