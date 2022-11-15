@@ -8,10 +8,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -73,18 +75,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         return customAuthFilter;
     }
 
+    public AuthenticationManager authenticationManager(){
+        return new ProviderManager(customAuthenticationProvider());
+    }
 
-    @Bean
+
+
     public AuthenticationProvider customAuthenticationProvider(){
         return new CustomProvider(userDetailsService());
     }
 
-    @Bean
+
     public AuthenticationSuccessHandler authenticationSuccessHandler(){
         return new CustomAuthenticationSuccessHandler();
     }
 
-    @Bean
     public UserDetailsService userDetailsService(){
         return new CustomUserDetailService(userRepository);
     }
