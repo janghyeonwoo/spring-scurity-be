@@ -33,6 +33,7 @@ import java.util.logging.Filter;
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
     private final RequestMatcher APP_LOGIN_REQUEST_MATCHER = new AntPathRequestMatcher("/app/login");
     private final UserRepository userRepository;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
@@ -45,13 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .authenticationEntryPoint(new CustomAuthenticationEntryPoint())
                 .and()
                     .logout()
-                    .invalidateHttpSession(true)
-
-
-
-//                .exceptionHandling()
-//                .authenticationEntryPoint(new CustomAuthenticationEntryPoint())
-        ;
+                    .invalidateHttpSession(true);
     }
 
     @Override
@@ -60,13 +55,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         super.configure(auth);
     }
 
-
     public AbstractAuthenticationProcessingFilter UsernamePasswordAuthenticationFilter() throws Exception {
         CustomUsernamePasswordTokenFilter customUsernamePasswordTokenFilter = new CustomUsernamePasswordTokenFilter(authenticationManager());
         customUsernamePasswordTokenFilter.setAuthenticationSuccessHandler(authenticationSuccessHandler());
         return customUsernamePasswordTokenFilter;
     }
-
 
     public AbstractAuthenticationProcessingFilter customAuthFilter() throws Exception {
         CustomAuthFilter customAuthFilter = new CustomAuthFilter(APP_LOGIN_REQUEST_MATCHER);
@@ -74,23 +67,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         customAuthFilter.setAuthenticationSuccessHandler(authenticationSuccessHandler());
         return customAuthFilter;
     }
-
     public AuthenticationManager authenticationManager(){
         return new ProviderManager(customAuthenticationProvider());
     }
-
-
 
     public AuthenticationProvider customAuthenticationProvider(){
         return new CustomProvider(userDetailsService());
     }
 
-
-    public AuthenticationSuccessHandler authenticationSuccessHandler(){
-        return new CustomAuthenticationSuccessHandler();
-    }
+    public AuthenticationSuccessHandler authenticationSuccessHandler(){  return new CustomAuthenticationSuccessHandler(); }
 
     public UserDetailsService userDetailsService(){
         return new CustomUserDetailService(userRepository);
     }
+
+
+
 }

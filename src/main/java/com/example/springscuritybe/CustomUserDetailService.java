@@ -21,7 +21,6 @@ public class CustomUserDetailService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findById(username).orElseThrow(() -> new RuntimeException("인증에러발생"));
-        UserDto userDto = new UserDto(user, Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER")));
-        return userDto;
+        return  new UserDto(user, Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER")));
     }
 }
