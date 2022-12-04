@@ -1,7 +1,7 @@
 package com.example.springscuritybe.config.security.service;
 
 import com.example.springscuritybe.domain.User;
-import com.example.springscuritybe.dto.UserDto;
+import com.example.springscuritybe.config.security.dto.UserDto;
 import com.example.springscuritybe.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

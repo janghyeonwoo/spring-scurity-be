@@ -1,6 +1,6 @@
 package com.example.springscuritybe.config.security.filter;
 
-import com.example.springscuritybe.dto.UserDto;
+import com.example.springscuritybe.config.security.dto.UserDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;

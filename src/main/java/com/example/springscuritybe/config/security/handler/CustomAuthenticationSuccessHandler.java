@@ -1,6 +1,6 @@
-package com.example.springscuritybe.config.security.dto;
+package com.example.springscuritybe.config.security.handler;
 
-import com.example.springscuritybe.dto.UserDto;
+import com.example.springscuritybe.config.security.dto.UserDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;

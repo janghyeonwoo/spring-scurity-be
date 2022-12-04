@@ -45,4 +45,13 @@ public class User extends BaseTime{
     @Column
     private SocialType socialType;
 
+
+
+//    public User(String name, String email, String id, String password , SocialType socialType){
+//        this.name = name;
+//        this.email = email;
+//        this.id = id;
+//        this.password = id +
+//    }
+
 }
