@@ -1,4 +1,4 @@
-package com.example.springscuritybe.config.dto;
+package com.example.springscuritybe.config.security.dto;
 
 import lombok.Getter;
 import lombok.Setter;

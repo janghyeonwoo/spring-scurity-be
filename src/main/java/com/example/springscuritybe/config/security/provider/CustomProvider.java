@@ -1,10 +1,7 @@
-package com.example.springscuritybe.config;
+package com.example.springscuritybe.config.security.provider;
 
-import com.example.springscuritybe.CustomUserDetailService;
 import com.example.springscuritybe.dto.UserDto;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;

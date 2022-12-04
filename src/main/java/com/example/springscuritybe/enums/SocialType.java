@@ -7,7 +7,8 @@ import lombok.AllArgsConstructor;
 public enum SocialType {
     FACEBOOK("FACEBOOK"),
     GOOGLE("GOOGLE"),
-    KAKAO("KAKAO");
+    KAKAO("KAKAO"),
+    NONE("");
 
     private final String ROLE_PREFIX= "ROLE_";
     private String name;

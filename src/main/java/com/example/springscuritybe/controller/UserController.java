@@ -1,15 +1,37 @@
 package com.example.springscuritybe.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.springscuritybe.dto.JoinDto;
+import com.example.springscuritybe.dto.LoginDto;
+import com.example.springscuritybe.dto.UserDto;
+import com.example.springscuritybe.service.UserService;
+import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+
+@RequiredArgsConstructor
 @RequestMapping("user")
 @RestController
 public class UserController {
 
-    @GetMapping("/")
-    public String login(){
-        return "login";
+    private final UserService userService;
+
+    @GetMapping("/join")
+    public ResponseEntity<Void> join(HttpServletRequest request){
+        userService.join(null);
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<String> login(HttpServletRequest request, @RequestBody LoginDto loginDto){
+        return ResponseEntity.ok(userService.login(loginDto));
+    }
+
+    @GetMapping("/test")
+    public String getTest(){
+        return "aa";
     }
 }

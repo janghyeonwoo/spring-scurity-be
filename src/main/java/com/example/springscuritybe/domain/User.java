@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Builder
 @Getter
 @Entity
-public class User {
+public class User extends BaseTime{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -33,18 +33,16 @@ public class User {
     private String email;
 
     @Column
-    private String principal;
-
-    @Enumerated(EnumType.STRING)
-    @Column
-    private SocialType socialType;
-
-    @Column
     private LocalDateTime createDate;
 
     @Column
     private LocalDateTime updateDate;
 
+//    @Column
+//    private String principal;
 
+    @Enumerated(EnumType.STRING)
+    @Column
+    private SocialType socialType;
 
 }

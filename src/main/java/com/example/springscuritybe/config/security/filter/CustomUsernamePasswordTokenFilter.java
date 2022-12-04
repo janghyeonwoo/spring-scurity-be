@@ -1,11 +1,10 @@
-package com.example.springscuritybe.config;
+package com.example.springscuritybe.config.security.filter;
 
-import com.example.springscuritybe.config.dto.UserDto;
+import com.example.springscuritybe.dto.UserDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;

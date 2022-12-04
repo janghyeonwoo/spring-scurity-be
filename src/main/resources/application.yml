@@ -12,7 +12,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/community?serverTimezone=UTC&characterEncoding=UTF-8
     username: root
-    password: 1234
+    password: 12345
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   security:
@@ -23,3 +23,12 @@ spring:
             client-id: 730502824216-9f1u893u5eul3lse9ovtk5phv593jr6a.apps.googleusercontent.com
             client-secret: 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
             scope: profile,email
+
+#UTF-8 인코딩 작업 진행
+server:
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+

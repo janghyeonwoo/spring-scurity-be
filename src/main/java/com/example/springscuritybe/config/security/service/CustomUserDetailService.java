@@ -1,4 +1,4 @@
-package com.example.springscuritybe;
+package com.example.springscuritybe.config.security.service;
 
 import com.example.springscuritybe.domain.User;
 import com.example.springscuritybe.dto.UserDto;
@@ -8,12 +8,13 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.Collections;
 
 
 @RequiredArgsConstructor
+@Service
 public class CustomUserDetailService implements UserDetailsService {
 
     private final UserRepository userRepository;

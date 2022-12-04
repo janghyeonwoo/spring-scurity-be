@@ -1,4 +1,4 @@
-package com.example.springscuritybe.config.dto;
+package com.example.springscuritybe.config.security.dto;
 
 import com.example.springscuritybe.dto.UserDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
