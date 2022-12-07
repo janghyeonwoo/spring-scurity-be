@@ -24,6 +24,10 @@ spring:
             client-secret: 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
             scope: profile,email
 
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
 #UTF-8 인코딩 작업 진행
 server:
   servlet:
@@ -31,4 +35,7 @@ server:
       charset: UTF-8
       enabled: true
       force: true
+
+
+
 
