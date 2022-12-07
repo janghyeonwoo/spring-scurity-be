@@ -5,6 +5,7 @@ import com.example.springscuritybe.config.security.handler.CustomAuthenticationS
 import com.example.springscuritybe.config.security.filter.CustomAuthFilter;
 import com.example.springscuritybe.config.security.filter.CustomJwtAuthFilter;
 import com.example.springscuritybe.config.security.filter.CustomUsernamePasswordTokenFilter;
+import com.example.springscuritybe.config.security.handler.CustomOauthSuccessHandler;
 import com.example.springscuritybe.config.security.provider.CustomProvider;
 import com.example.springscuritybe.config.security.provider.JwtTokenProvider;
 import com.example.springscuritybe.config.security.service.CustomOauthUserService;
@@ -12,6 +13,7 @@ import com.example.springscuritybe.config.security.service.CustomUserDetailServi
 import com.example.springscuritybe.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -55,19 +57,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/user/login", "/user/join").permitAll()
                 .antMatchers("/user/**").authenticated()
                 .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                    .sessionManagement()
+                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .logout()
-                .invalidateHttpSession(true)
+                    .logout()
+                    .invalidateHttpSession(true)
                 .and()
-                .formLogin().disable()
-                .addFilterBefore(new CustomJwtAuthFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
-                .exceptionHandling()
-                .authenticationEntryPoint(new CustomAuthenticationEntryPoint())
+                    .formLogin().disable()
+                    .addFilterBefore(new CustomJwtAuthFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
+                    .exceptionHandling()
+                    .authenticationEntryPoint(new CustomAuthenticationEntryPoint())
                 .and()
-                .oauth2Login()
-                .userInfoEndpoint().userService(customOauthUserService);
+                    .oauth2Login()
+                    .userInfoEndpoint().userService(customOauthUserService)
+                .and()
+                    .successHandler(oAuth2AuthenticationSuccessHandler())
+
+        ;
+
 
 
     }
@@ -109,6 +116,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public UserDetailsService userDetailsService() {
         return new CustomUserDetailService(userRepository);
     }
+
+    @Bean
+    public CustomOauthSuccessHandler oAuth2AuthenticationSuccessHandler() {
+        return new CustomOauthSuccessHandler();
+    }
+
 
 
 }
