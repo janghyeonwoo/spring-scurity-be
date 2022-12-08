@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.concurrent.ExecutionException;
 
 @RequiredArgsConstructor
 @RequestMapping("user")
@@ -42,5 +43,11 @@ public class UserController {
         TestResponse testResponse = new TestResponse();
         testResponse.setTest(TestEnum.NO);
         return testResponse;
+    }
+
+    @GetMapping("async")
+    public ResponseEntity<Void> getVoid() throws ExecutionException, InterruptedException {
+        userService.getCompleteFutuer();
+        return ResponseEntity.ok().build();
     }
 }
